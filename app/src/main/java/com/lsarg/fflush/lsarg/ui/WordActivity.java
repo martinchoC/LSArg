@@ -2,7 +2,6 @@ package com.lsarg.fflush.lsarg.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -71,11 +70,35 @@ public class WordActivity extends YouTubeBaseActivity implements YouTubePlayer.O
 
         nombre.setText(seña.getNombre());
 
-        configuracion.setText("Configuración: "+seña.getConfiguracion());
-        movimiento.setText("Movimiento: "+seña.getMovimiento());
-        orientacion.setText("Orientación: "+seña.getOrientacion());
-        ubicacion.setText("Ubicación: "+seña.getUbicacion());
-        rasgosNoManuales.setText("Rasgos no manuales: "+seña.getRasgosNoManuales());
+        if(!seña.getConfiguracion().equals("null")) {
+            configuracion.setText("Configuración: "+seña.getConfiguracion());
+        }
+        else
+            configuracion.setText("Configuración: -");
+
+        if(!seña.getMovimiento().equals("null")) {
+            movimiento.setText("Movimiento: "+seña.getMovimiento());
+        }
+        else
+            movimiento.setText("Movimiento: -");
+
+        if(!seña.getOrientacion().equals("null")) {
+            orientacion.setText("Orientación: "+seña.getOrientacion());
+        }
+        else
+            orientacion.setText("Orientación: -");
+
+        if(!seña.getUbicacion().equals("null")) {
+            ubicacion.setText("Ubicación: "+seña.getUbicacion());
+        }
+        else
+            ubicacion.setText("Ubicación: -");
+
+        if(!seña.getRasgosNoManuales().equals("null")) {
+            rasgosNoManuales.setText("Rasgos no manuales: "+seña.getRasgosNoManuales());
+        }
+        else
+            rasgosNoManuales.setText("Rasgos no manuales: -");
 
         if(!seña.getObservacion().equals("null")) {
             observacion.setText("Observación: " + seña.getObservacion());
@@ -96,23 +119,6 @@ public class WordActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             Picasso.with(this).load(seña.getFoto4()).into(foto4);
         }
 
-
-
-        /*
-        System.out.println("Señia: "+seña.getNombre());
-        System.out.println("Rasgos no manuales: "+seña.getRasgosNoManuales());
-        System.out.println("Ubicacion: "+seña.getUbicacion());
-        System.out.println("Observacion: "+seña.getObservacion());
-        System.out.println("Orientacion: "+seña.getOrientacion());
-        System.out.println("Movimiento: "+seña.getMovimiento());
-        System.out.println("Configuracion: "+seña.getConfiguracion());
-        System.out.println("Foto 1: "+seña.getFoto1());
-        System.out.println("Foto 2: "+seña.getFoto2() );
-        System.out.println("Foto 3: "+seña.getFoto3());
-        System.out.println("Foto 4: "+seña.getFoto4());
-        System.out.println("Video de frente: "+seña.getVideoFrente());
-        System.out.println("Video de perfil: "+seña.getVideoPerfil());
-        */
     }
 
     @Override
@@ -121,7 +127,7 @@ public class WordActivity extends YouTubeBaseActivity implements YouTubePlayer.O
             List<String> videoIds = new ArrayList<>();
             videoIds.add(seña.getVideoFrente());
             videoIds.add(seña.getVideoPerfil());
-            player.cueVideos(videoIds); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+            player.cueVideos(videoIds);
         }
     }
 
@@ -129,9 +135,6 @@ public class WordActivity extends YouTubeBaseActivity implements YouTubePlayer.O
     public void onInitializationFailure(Provider provider, YouTubeInitializationResult errorReason) {
         if (errorReason.isUserRecoverableError()) {
             errorReason.getErrorDialog(this, RECOVERY_REQUEST).show();
-        } else {
-            //String error = String.format(getString(R.string.player_error), errorReason.toString());
-            //Toast.makeText(this, error, Toast.LENGTH_LONG).show();
         }
     }
 
